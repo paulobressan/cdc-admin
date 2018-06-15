@@ -11,7 +11,10 @@ class App extends Component {
     super();
     //definir o estado da aplicação
     this.state = {
-      lista: []
+      lista: [],
+      nome:"",
+      email:"",
+      senha:""
     };
   }
 
@@ -24,6 +27,24 @@ class App extends Component {
         this.setState({ lista: res });
       }
     })
+  }
+
+  //Adicionando evento submit no form
+  enviaForm(evento){
+    evento.preventDefault();
+    $.ajax({
+      url:"http://cdc-react.herokuapp.com/api/autores",
+      contentType: "application/json",
+      dataType:"json",
+      type:"post",
+      data: JSON.stringify({nome:this.state.nome, email:this.state.email, senha:this.state.senha}),
+      success: (res)=>{
+        alert("Adicionado com sucesso");
+      },
+      error: (erro)=>{
+        alert(`Erro ocorrido ${erro}`);
+      }
+    });
   }
 
   render() {
@@ -41,7 +62,6 @@ class App extends Component {
               <li className="pure-menu-item"><a href="#" className="pure-menu-link">Home</a></li>
               <li className="pure-menu-item"><a href="#" className="pure-menu-link">Autor</a></li>
               <li className="pure-menu-item"><a href="#" className="pure-menu-link">Livros</a></li>
-
             </ul>
           </div>
         </div>
@@ -52,14 +72,14 @@ class App extends Component {
           </div>
           <div className="content" id="content">
             <div className="pure-form pure-form-aligned">
-              <form className="pure-form pure-form-aligned">
+              <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm.bind(this)} method="post">
                 <div className="pure-control-group">
                   <label htmlFor="nome">Nome</label>
-                  <input id="nome" type="text" name="nome" value="" />
+                  <input id="nome" type="text" name="nome" />
                 </div>
                 <div className="pure-control-group">
                   <label htmlFor="email">Email</label>
-                  <input id="email" type="email" name="email" value="" />
+                  <input id="email" type="email" name="email" />
                 </div>
                 <div className="pure-control-group">
                   <label htmlFor="senha">Senha</label>
@@ -84,7 +104,7 @@ class App extends Component {
                   {
                     this.state.lista.map((autor, index) =>
                     {
-                      return index > 8634
+                      return index > 8645
                         ? <tr key={autor.id}>
                         <td>{autor.nome}</td>
                         <td>{autor.email}</td>
