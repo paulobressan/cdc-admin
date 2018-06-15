@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import './css/pure-min.css';
+import './pure/css/pure-min.css';
 import './css/side-menu.css';
 import $ from 'jquery';
 
@@ -24,6 +24,11 @@ class App extends Component {
         this.setState({ lista: res });
       }
     })
+  }
+
+  enviaForm(event){
+    event.preventDefault();
+    alert("teste");
   }
 
   render() {
@@ -52,14 +57,14 @@ class App extends Component {
           </div>
           <div className="content" id="content">
             <div className="pure-form pure-form-aligned">
-              <form className="pure-form pure-form-aligned">
+              <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm}>
                 <div className="pure-control-group">
                   <label htmlFor="nome">Nome</label>
-                  <input id="nome" type="text" name="nome" value="" />
+                  <input id="nome" type="text" name="nome" />
                 </div>
                 <div className="pure-control-group">
                   <label htmlFor="email">Email</label>
-                  <input id="email" type="email" name="email" value="" />
+                  <input id="email" type="email" name="email" />
                 </div>
                 <div className="pure-control-group">
                   <label htmlFor="senha">Senha</label>
